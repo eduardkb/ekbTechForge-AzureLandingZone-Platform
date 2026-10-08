@@ -1,0 +1,1 @@
+# ekbTechForge-AzureLandingZone-Platform
