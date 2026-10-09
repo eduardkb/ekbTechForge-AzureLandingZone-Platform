@@ -10,6 +10,36 @@ Terraform configuration for a small-company Azure platform, split into three ind
 
 The hierarchy uses Microsoft's supported [ALZ Terraform pattern module](https://registry.terraform.io/modules/Azure/avm-ptn-alz/azurerm/latest), and the workspace and VNet use Microsoft's [AVM Log Analytics](https://registry.terraform.io/modules/Azure/avm-res-operationalinsights-workspace/azurerm/latest) and [AVM Virtual Network](https://registry.terraform.io/modules/Azure/avm-res-network-virtualnetwork/azurerm/latest) modules. The deprecated `caf-enterprise-scale` module is intentionally not used.
 
+## Pre-Requisites
+
+### Create App Registration
+- Go to Azure EntraID and create a App Registration
+- Setup Federated Credentials
+  - open AppReg and navigate to "Certificates & Secrets" -> "Federated Credentials" -> "Add Credential".
+  - Scenario = Github Actions
+  - Fill out fileds
+  - Organization ID (Get from: https://api.github.com/users/<USER_ID>)
+  - Repository ID (Get from: https://api.github.com/repos/<USER_ID>/<REPO_NAME>).
+  - Entity type = Environment
+  - Env. Name = "azure-platform"
+  - give it a name
+  - Save
+- Setup Access for AppReg's Service Principal
+  - Assign the "Management Group Contributor" role from the Job Function Roles to the SP on the root Management Group.
+  - Assign the "Contributor"  role from the Privileged administrator roles to the SP on the root Management Group.
+  - Access "Cost Management + Billing" -> "Billing Profiles" -> select the billing profile -> Access Control (IAM) -> Add Role Assignment and add "Billing Profile Contributor" role to the SP.
+  - 
+
+### Create Github Variables
+Configure following Variables as repository variables in the github repository (Inside Repo Settings -> Secrets and Variables -> Actions -> Variabels -> New Repository Variable):
+- AZURE_CLIENT_ID
+- AZURE_TENANT_ID
+- PLATFORM_SUBSCRIPTION_ID
+- TFSTATE_RESOURCE_GROUP
+- TFSTATE_STORAGE_ACCOUNT
+- TFSTATE_CONTAINER
+
+
 ## Cost Defaults
 
 - No Azure Firewall, VPN/ExpressRoute gateway, NAT Gateway, DDoS plan, public IP, private endpoint, Sentinel, Automation account, or paid Defender plan is deployed.
