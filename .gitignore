@@ -1,0 +1,9 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.lock.hcl
+crash.log
+terraform.tfvars
+terraform.tfvars.json
+.alzlib/

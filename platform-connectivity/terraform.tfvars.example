@@ -1,0 +1,14 @@
+subscription_id = "00000000-0000-0000-0000-000000000000"
+location        = "southcentralus"
+
+hub_address_space = ["10.0.0.0/16"]
+
+subnets = {
+  SharedServices = {
+    name             = "snet-shared-services"
+    address_prefixes = ["10.0.1.0/24"]
+  }
+}
+
+# Keep empty until existing spoke VNet resource IDs are known.
+peerings = {}

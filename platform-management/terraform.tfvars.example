@@ -1,0 +1,62 @@
+subscription_id = "00000000-0000-0000-0000-000000000000"
+
+# Set to false to defer workspace charges until central logging is required.
+create_log_analytics_workspace = true
+workspace_daily_quota_gb      = 0.5
+workspace_retention_days      = 30
+enable_subscription_diagnostics = false
+
+# Add each workload or platform resource type before enforcing the allow-list.
+allowed_resource_types = [
+  "Microsoft.Authorization/policyAssignments",
+  "Microsoft.Authorization/roleAssignments",
+  "Microsoft.Compute/disks",
+  "Microsoft.Compute/virtualMachines",
+  "Microsoft.Insights/actionGroups",
+  "Microsoft.Insights/activityLogAlerts",
+  "Microsoft.Insights/diagnosticSettings",
+  "Microsoft.Insights/metricAlerts",
+  "Microsoft.KeyVault/vaults",
+  "Microsoft.ManagedIdentity/userAssignedIdentities",
+  "Microsoft.Network/networkSecurityGroups",
+  "Microsoft.Network/networkWatchers",
+  "Microsoft.Network/privateDnsZones",
+  "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+  "Microsoft.Network/routeTables",
+  "Microsoft.Network/virtualNetworks",
+  "Microsoft.Network/virtualNetworks/subnets",
+  "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+  "Microsoft.OperationalInsights/workspaces",
+  "Microsoft.Resources/deployments",
+  "Microsoft.Resources/deploymentScripts",
+  "Microsoft.Resources/resourceGroups",
+  "Microsoft.Resources/templateSpecs",
+  "Microsoft.Security/pricings",
+  "Microsoft.Storage/storageAccounts",
+  "Microsoft.Web/sites",
+]
+
+# Set real Entra group object IDs; assignments are empty by default.
+# Uncomment and replace IDs with security-group object IDs from Entra ID.
+management_group_role_assignments = {
+  # platform_auditors = {
+  #   management_group_name      = "ekbtechforge"
+  #   role_definition_id_or_name = "Reader"
+  #   principal_id               = "00000000-0000-0000-0000-000000000000"
+  #   principal_type             = "Group"
+  #   description                = "Read-only platform audit access"
+  # }
+  # security_readers = {
+  #   management_group_name      = "ekbtechforge"
+  #   role_definition_id_or_name = "Security Reader"
+  #   principal_id               = "00000000-0000-0000-0000-000000000000"
+  #   principal_type             = "Group"
+  #   description                = "Read-only security posture access"
+  # }
+}
+
+# Subscription placement is intentionally opt-in. Uncomment only after deciding
+# whether this subscription is for platform services or workload landing zones.
+subscription_placement = {}
+
+alert_email_receivers = {}
