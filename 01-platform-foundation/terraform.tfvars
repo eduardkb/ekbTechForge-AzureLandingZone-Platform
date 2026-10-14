@@ -3,8 +3,8 @@ platform_subscription_id = "00000000-0000-0000-0000-000000000000"
 billing_scope_id         = "/providers/Microsoft.Billing/billingAccounts/<billing-account-id>/billingProfiles/<billing-profile-id>"
 
 # GLOBAL VARIABLES
-location                 = "southcentralus"
-enable_telemetry         = false
+location         = "southcentralus"
+enable_telemetry = false
 
 # VARIABLES
 platform_subscriptions = {
@@ -32,7 +32,7 @@ allowed_locations = [
   "southcentralus",
   "eastus",
   "eastus2",
-  "westus2"
+  "westus2",
 ]
 
 required_tags = [
