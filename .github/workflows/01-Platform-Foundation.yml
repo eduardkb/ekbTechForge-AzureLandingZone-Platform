@@ -43,15 +43,6 @@ jobs:
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
           subscription-id: ${{ vars.PLATFORM_SUBSCRIPTION_ID }}
 
-      - name: Diagnose Management Group Role Assignment Access
-        shell: bash
-        run: |
-          az rest \
-            --method GET \
-            --url "https://management.azure.com/providers/Microsoft.Management/managementGroups/lfzstratcraft/providers/Microsoft.Authorization/roleAssignments?api-version=2022-04-01" \
-            --output json
-
-
       - name: Initialize Terraform
         env:
           TFSTATE_RESOURCE_GROUP: ${{ vars.TFSTATE_RESOURCE_GROUP }}
