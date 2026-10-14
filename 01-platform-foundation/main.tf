@@ -47,8 +47,7 @@ locals {
 
   platform_subscriptions = {
     management   = var.platform_subscriptions.management
-    connectivity = var.platform_subscriptions.connectivity
-    security     = var.platform_subscriptions.security
+    connectivity = var.platform_subscriptions.connectivity    
   }
 }
 
@@ -77,20 +76,6 @@ resource "azurerm_management_group_subscription_association" "platform" {
   subscription_id     = each.value.subscription_id
 
   depends_on = [module.alz_foundation]
-}
-
-resource "azapi_resource" "platform_resource_group" {
-  for_each = local.platform_subscriptions
-
-  type      = "Microsoft.Resources/resourceGroups@2021-04-01"
-  name      = each.value.resource_group_name
-  parent_id = "/subscriptions/${azurerm_subscription.platform[each.key].subscription_id}"
-  location  = var.location
-  body = {
-    tags = var.resource_tags
-  }
-
-  depends_on = [azurerm_management_group_subscription_association.platform]
 }
 
 data "azurerm_policy_definition" "allowed_locations" {

@@ -9,16 +9,10 @@ enable_telemetry = false
 # VARIABLES
 platform_subscriptions = {
   management = {
-    subscription_name   = "platform-management-sub"
-    resource_group_name = "platform-management-rg"
+    subscription_name   = "platform-management-sub"    
   }
   connectivity = {
-    subscription_name   = "platform-connectivity-sub"
-    resource_group_name = "platform-connectivity-rg"
-  }
-  security = {
-    subscription_name   = "platform-security-sub"
-    resource_group_name = "platform-security-rg"
+    subscription_name   = "platform-connectivity-sub"    
   }
 }
 
@@ -183,6 +177,9 @@ security_groups = {
   "SG-Azure-CorpB-Readers" = {
     description = "Reader Company-B management group"
   }
+  "SG-Azure-Global-Owners" = {
+    description = "Root tenant owner"
+  }
 }
 
 group_role_assignments = {
@@ -215,5 +212,10 @@ group_role_assignments = {
     group_name           = "SG-Azure-CorpB-Readers"
     role_definition_name = "Reader"
     management_group_key = "corp_b"
+  }
+  global_owners = {
+    group_name           = "SG-Azure-Global-Owners"
+    role_definition_name = "Owner"
+    management_group_key = "corporate"
   }
 }

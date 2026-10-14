@@ -20,12 +20,19 @@
   - Save
 
 ### Assign required access to the Service Principal
-- Setup Access for teh Application Registration's Service Principal
-  - Allows writing terraform state files to bootstrap storage account: Assing "Storage Blob Data Contributor" to the service principal on the bootstrap storage account.
-  - Allows creating Management Groups: Assign the "Management Group Contributor" role from the Job Function Roles to the SP on the root Management Group. 
-  - Allows creating subscriptions: Access "Cost Management + Billing" -> "Billing Profiles" -> select the billing profile -> Access Control (IAM) -> Add Role Assignment and add "Billing Profile Contributor" role to the SP.
-  - Allows creating security groups: Go to Entra ID -> Roles and Administrator -> select "Groups Administrator" -> Add Assignments and add the GitHub Service Principal.
-  - Allows creating resources: Create custom role below (replacing <ROOT_MANAGEMENT_GROUP_ID> with it's ID from the overview blade) and assign it to the SP on the root Management Group.
+- Setup Access for teh Application Registration's Service Principal  
+  - On Root Management Group:
+    - Allows creating Management Groups: Assign the "Management Group Contributor" role from the Job Function Roles to the SP on the root Management Group.     
+    - Allows creating resources: Create custom role below (replacing <ROOT_MANAGEMENT_GROUP_ID> with it's ID from the overview blade) and assign it to the SP on the root Management Group.
+    - Allows assigning RBAC Roles to management groups: Assign the "Role Based Access Control Administrator" role from the Priviledged administrator Roles to the SP on the root Management Group. 
+    - Allows assigning Policies to management groups: Assign the "Resource Policy Contributor" role from the Job Function Roles to the SP on the root Management Group. 
+  - On Bootstrap Storage Account:
+    - Allows writing terraform state files to bootstrap storage account: Assing "Storage Blob Data Contributor" to the service principal on the bootstrap storage account.
+  - On Billing Profile:
+    - Allows creating subscriptions: Access "Cost Management + Billing" -> "Billing Profiles" -> select the billing profile -> Access Control (IAM) -> Add Role Assignment and add "Billing Profile Contributor" role to the dSP.
+  - On Entra ID:
+    - Allows creating security groups: Go to Entra ID -> Roles and Administrator -> select "Groups Administrator" -> Add Assignments and add the GitHub Service Principal.
+  
 
 ```JSON
 {
@@ -68,6 +75,9 @@
 ```
 
 ### Create Github Variables
+Get the 
+
+
 Configure following Variables as repository variables in the github repository (Inside Repo Settings -> Secrets and Variables -> Actions -> Variabels -> New Repository Variable):
 - AZURE_CLIENT_ID
 - AZURE_TENANT_ID
@@ -93,3 +103,4 @@ Configure following Variables as repository variables in the github repository (
 ## Platform - Security/Identity Details
 
 - TODO: Replace with content
+
