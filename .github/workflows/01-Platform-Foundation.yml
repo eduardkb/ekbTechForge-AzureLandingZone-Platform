@@ -23,19 +23,9 @@ jobs:
       ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
       ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ vars.PLATFORM_SUBSCRIPTION_ID }}
-      ARM_USE_OIDC: "true"
+      ARM_USE_OIDC: "true"      
       TF_IN_AUTOMATION: "true"
       TF_INPUT: "false"
-      TF_VAR_platform_subscription_id: ${{ vars.PLATFORM_SUBSCRIPTION_ID }}
-      TF_VAR_billing_scope_id: ${{ vars.BILLING_SCOPE_ID }}
-      TF_VAR_location: ${{ vars.AZURE_LOCATION }}
-      TF_VAR_enable_telemetry: ${{ vars.ENABLE_TELEMETRY || 'false' }}
-      TF_VAR_platform_subscriptions: ${{ vars.PLATFORM_SUBSCRIPTIONS_JSON }}
-      TF_VAR_allowed_locations: ${{ vars.ALLOWED_LOCATIONS_JSON }}
-      TF_VAR_required_tags: ${{ vars.REQUIRED_TAGS_JSON }}
-      TF_VAR_allowed_resource_types: ${{ vars.ALLOWED_RESOURCE_TYPES_JSON }}
-      TF_VAR_security_groups: ${{ vars.SECURITY_GROUPS_JSON }}
-      TF_VAR_group_role_assignments: ${{ vars.GROUP_ROLE_ASSIGNMENTS_JSON }}
 
     steps:
       - name: Check out repository
@@ -52,33 +42,6 @@ jobs:
           client-id: ${{ vars.AZURE_CLIENT_ID }}
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
           subscription-id: ${{ vars.PLATFORM_SUBSCRIPTION_ID }}
-
-      - name: Validate Terraform inputs
-        shell: bash
-        run: |
-          required_vars=(
-            TF_VAR_platform_subscription_id
-            TF_VAR_billing_scope_id
-            TF_VAR_location
-            TF_VAR_platform_subscriptions
-            TF_VAR_allowed_locations
-            TF_VAR_required_tags
-            TF_VAR_allowed_resource_types
-            TF_VAR_security_groups
-            TF_VAR_group_role_assignments
-          )
-          for name in "${required_vars[@]}"; do
-            if [ -z "${!name}" ]; then
-              echo "Missing GitHub Actions variable for $name"
-              exit 1
-            fi
-          done
-          jq -e 'keys == ["connectivity", "management"] and (.management.subscription_name | type == "string") and (.connectivity.subscription_name | type == "string")' <<< "$TF_VAR_platform_subscriptions" >/dev/null
-          jq -e 'type == "array" and length > 0' <<< "$TF_VAR_allowed_locations" >/dev/null
-          jq -e 'type == "array" and length > 0' <<< "$TF_VAR_required_tags" >/dev/null
-          jq -e 'type == "array" and length > 0' <<< "$TF_VAR_allowed_resource_types" >/dev/null
-          jq -e 'type == "object" and length > 0' <<< "$TF_VAR_security_groups" >/dev/null
-          jq -e 'type == "object" and length > 0' <<< "$TF_VAR_group_role_assignments" >/dev/null
 
       - name: Initialize Terraform
         env:
@@ -101,7 +64,10 @@ jobs:
         run: terraform validate
 
       - name: Create Terraform plan
-        run: terraform plan -out=tfplan
+        run: |
+          terraform plan -out=tfplan \
+            -var="platform_subscription_id=${{ vars.PLATFORM_SUBSCRIPTION_ID }}" \
+            -var="billing_scope_id=${{ vars.BILLING_SCOPE_ID }}"
 
-      - name: Apply Terraform plan
+      - name: Apply Terraform plan        
         run: terraform apply -auto-approve tfplan
