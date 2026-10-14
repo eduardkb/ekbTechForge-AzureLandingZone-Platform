@@ -1,6 +1,6 @@
 # USED ON LOCAL DEPLOYMENT ONLY
 platform_subscription_id = "00000000-0000-0000-0000-000000000000"
-billing_scope_id         = "/providers/Microsoft.Billing/billingAccounts/<billing-account-id>/billingProfiles/<billing-profile-id>"
+invoice_section_id       = "/providers/Microsoft.Billing/billingAccounts/<billing-account-id>/billingProfiles/<billing-profile-id>"
 
 # GLOBAL VARIABLES
 location         = "southcentralus"

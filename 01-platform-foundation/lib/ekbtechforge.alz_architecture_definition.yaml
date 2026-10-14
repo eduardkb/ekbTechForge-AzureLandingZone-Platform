@@ -62,25 +62,25 @@ management_groups:
     parent_id: ekbtechforge
   - archetypes:
       - empty
-    display_name: Corp-B
+    display_name: LfzStratCraft
     exists: false
-    id: corp-b
+    id: lfzstratcraft
     parent_id: corporate
   - archetypes:
       - empty
     display_name: Production
     exists: false
-    id: corp-b-production
-    parent_id: corp-b
+    id: lfzstratcraft-production
+    parent_id: lfzstratcraft
   - archetypes:
       - empty
     display_name: NonProduction
     exists: false
-    id: corp-b-nonproduction
-    parent_id: corp-b
+    id: lfzstratcraft-nonproduction
+    parent_id: lfzstratcraft
   - archetypes:
       - empty
     display_name: Sandbox
     exists: false
-    id: corp-b-sandbox
-    parent_id: corp-b
+    id: lfzstratcraft-sandbox
+    parent_id: lfzstratcraft

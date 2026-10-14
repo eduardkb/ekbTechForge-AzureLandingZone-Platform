@@ -3,8 +3,8 @@ variable "platform_subscription_id" {
   type        = string
 }
 
-variable "billing_scope_id" {
-  description = "Azure billing scope authorized to create subscriptions."
+variable "invoice_section_id" {
+  description = "Azure billing section authorized to create subscriptions."
   type        = string
 }
 

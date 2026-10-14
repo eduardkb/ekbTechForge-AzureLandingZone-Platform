@@ -35,10 +35,10 @@ locals {
     ekbtechforge_production    = "ekbtechforge-production"
     ekbtechforge_nonproduction = "ekbtechforge-nonproduction"
     ekbtechforge_sandbox       = "ekbtechforge-sandbox"
-    corp_b                     = "corp-b"
-    corp_b_production          = "corp-b-production"
-    corp_b_nonproduction       = "corp-b-nonproduction"
-    corp_b_sandbox             = "corp-b-sandbox"
+    lfzstratcraft              = "lfzstratcraft"
+    lfzstratcraft_production    = "lfzstratcraft-production"
+    lfzstratcraft_nonproduction = "lfzstratcraft-nonproduction"
+    lfzstratcraft_sandbox       = "lfzstratcraft-sandbox"
   }
 
   management_group_resource_ids = {
@@ -65,7 +65,7 @@ resource "azurerm_subscription" "platform" {
   for_each = local.platform_subscriptions
 
   subscription_name = each.value.subscription_name
-  billing_scope_id  = var.billing_scope_id
+  billing_scope_id  = var.invoice_section_id
   workload          = each.value.workload
 }
 

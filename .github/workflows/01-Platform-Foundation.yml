@@ -67,7 +67,7 @@ jobs:
         run: |
           terraform plan -out=tfplan \
             -var="platform_subscription_id=${{ vars.PLATFORM_SUBSCRIPTION_ID }}" \
-            -var="billing_scope_id=${{ vars.BILLING_SCOPE_ID }}"
+            -var="invoice_section_id=${{ vars.INVOICE_SECTION_ID }}"
 
       - name: Apply Terraform plan        
         run: terraform apply -auto-approve tfplan
