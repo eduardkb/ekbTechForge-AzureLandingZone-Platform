@@ -1,5 +1,6 @@
-provider "azurerm" {
+provider "azurerm" {  
   features {}
+  resource_provider_registrations = "none"
   subscription_id = var.platform_subscription_id
 }
 
