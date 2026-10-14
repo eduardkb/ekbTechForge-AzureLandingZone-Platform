@@ -76,13 +76,11 @@
 
 ### Create Github Variables
 Build the INVOICE_SECTION_ID
+- Go to a subscription using the same billing profile as the new subscriptions
+- Access "Billing Properties" blade of the sunbscription.
+- all parameners needed are on this screen. Replaace each one on the string below
 - Format of the INVOICE_SECTION_ID: "/providers/Microsoft.Billing/billingAccounts/<BILLING_ACCOUNT_ID>/billingProfiles/<BILLING_PROFILE_ID>/invoiceSections/<INVOICE_SECTIONS_ID>"
-- Get the parameters from below, replace on string above and configure the whole string on git actions variable below:
-  - Get BILLING_ACCOUNT_ID: on Cost Management + Billing inside the Properties blade
-  - Get BILLING_PROFILE_ID: on Cost Management + Billing -> Billing Profiles -> Select the billing profile -> Properties -> Billing Profile ID
-  - Get INVOICE_SECTIONS_ID: on Cost Management + Billing -> Billing Profiles -> click on the profile -> Invoice Sections -> Select the section -> Properties -> Invoice Section ID
-
-
+- Use the built string on the variable below.
 
 Configure following Variables as repository variables in the github repository (Inside Repo Settings -> Secrets and Variables -> Actions -> Variabels -> New Repository Variable):
 - AZURE_CLIENT_ID
