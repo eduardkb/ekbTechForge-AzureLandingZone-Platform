@@ -21,6 +21,7 @@
 
 ### Assign required access to the Service Principal
 - Setup Access for teh Application Registration's Service Principal
+  - Allows writing terraform state files to bootstrap storage account: Assing "Storage Blob Data Contributor" to the service principal on the bootstrap storage account.
   - Allows creating Management Groups: Assign the "Management Group Contributor" role from the Job Function Roles to the SP on the root Management Group. 
   - Allows creating subscriptions: Access "Cost Management + Billing" -> "Billing Profiles" -> select the billing profile -> Access Control (IAM) -> Add Role Assignment and add "Billing Profile Contributor" role to the SP.
   - Allows creating security groups: Go to Entra ID -> Roles and Administrator -> select "Groups Administrator" -> Add Assignments and add the GitHub Service Principal.

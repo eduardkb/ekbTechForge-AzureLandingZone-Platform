@@ -55,7 +55,7 @@ jobs:
                 -backend-config="container_name=$TFSTATE_CONTAINER" \
                 -backend-config="key=platform-foundation.tfstate" \
                 -backend-config="use_azuread_auth=true" \
-                -backend-config="use_oidc=true"           
+                -backend-config="use_oidc=true"
 
       - name: Check formatting
         run: terraform fmt -check -recursive
@@ -64,7 +64,8 @@ jobs:
         run: terraform validate
 
       - name: Create Terraform plan
-        run: terraform plan -out=tfplan \
+        run: |
+          terraform plan -out=tfplan \
             -var="platform_subscription_id=${{ vars.PLATFORM_SUBSCRIPTION_ID }}" \
             -var="billing_scope_id=${{ vars.BILLING_SCOPE_ID }}"
 
