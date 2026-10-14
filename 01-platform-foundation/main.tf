@@ -73,7 +73,7 @@ resource "azurerm_management_group_subscription_association" "platform" {
   for_each = azurerm_subscription.platform
 
   management_group_id = local.management_group_resource_ids[each.key]
-  subscription_id     = each.value.id
+  subscription_id     = "/subscriptions/${each.value.subscription_id}"
 
   depends_on = [module.alz_foundation]
 }
