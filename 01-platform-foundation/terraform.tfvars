@@ -32,7 +32,7 @@ allowed_locations = [
   "southcentralus",
   "eastus",
   "eastus2",
-  "westus2",  
+  "westus2"
 ]
 
 required_tags = [
