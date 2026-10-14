@@ -47,7 +47,7 @@ locals {
 
   platform_subscriptions = {
     management   = var.platform_subscriptions.management
-    connectivity = var.platform_subscriptions.connectivity    
+    connectivity = var.platform_subscriptions.connectivity
   }
 }
 

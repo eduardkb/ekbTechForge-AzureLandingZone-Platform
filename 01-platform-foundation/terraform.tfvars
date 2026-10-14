@@ -9,10 +9,10 @@ enable_telemetry = false
 # VARIABLES
 platform_subscriptions = {
   management = {
-    subscription_name   = "platform-management-sub"    
+    subscription_name = "platform-management-sub"
   }
   connectivity = {
-    subscription_name   = "platform-connectivity-sub"    
+    subscription_name = "platform-connectivity-sub"
   }
 }
 

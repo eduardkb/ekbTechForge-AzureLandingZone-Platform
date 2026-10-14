@@ -104,3 +104,44 @@ Configure following Variables as repository variables in the github repository (
 
 - TODO: Replace with content
 
+## TODO List:
+  5 subs limit
+	bootstrap
+	management
+	connectivity
+	app-a
+	app-b
+
+
+add eduard buhali as owner to everything below root mg.
+
+document get invoiceSectionId (or build it manually getting all 3 parameters)
+	with billing account id found in azure execute below in cloud shell (powershell)
+	then get the parameter "invoiceSectionId" from the result
+		sample: /providers/Microsoft.Billing/billingAccounts/b75b932d-f3fb-5d49-e6de-5397e6b0a316:17ef770d-ab91-472e-9f0c-f8cac36b5e3d_2019-05-31/billingProfiles/BDBD-SEP3-BG7-PGB/invoiceSections/ZXGN-S5ZD-PJA-PGB
+	
+	```PowerShell
+	$billingAccount = "b75b932d-f3fb-5d49-e6de-5397e6b0a316:17ef770d-ab91-472e-9f0c-f8cac36b5e3d_2019-05-31"
+
+	# Get a token for Azure Resource Manager
+	$token = (Get-AzAccessToken -ResourceUrl "https://management.azure.com").Token
+	$tokenPlainText = [System.Net.NetworkCredential]::new("", $token).Password
+	$headers = @{
+		Authorization = "Bearer $tokenPlainText"
+	}
+
+	$uri = "https://management.azure.com/providers/Microsoft.Billing/billingAccounts/$billingAccount/listInvoiceSectionsWithCreateSubscriptionPermission?api-version=2024-04-01"
+
+	# List invoice sections where you can create subscriptions
+	$result = Invoke-RestMethod -Method POST -Uri $uri -Headers $headers
+
+	$result.value | Select-Object billingProfileDisplayName, billingProfileId, invoiceSectionDisplayName, invoiceSectionId | Format-List
+
+
+	/providers/Microsoft.Billing/billingAccounts/b75b932d-f3fb-5d49-e6de-5397e6b0a316:17ef770d-ab91-472e-9f0c-f8cac36b5e3d_2019-05-31/billingProfiles/BDBD-SEP3-BG7-PGB
+	```
+	
+Modify github variable from BILLING_SCOPE_ID to INVOICE_SECTION_ID
+	- on variables
+	- on git actions code
+	- on terraform
