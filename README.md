@@ -2,7 +2,7 @@
 
 ## Summary
 
-- TODO: Replace with content
+- Replace with content
 
 ## Pre-Requisites
 
@@ -90,23 +90,24 @@ Configure following Variables as repository variables in the github repository (
 
 ## Platform - Foundation Details
 
-- TODO: Replace with content
+- Replace with content
 
 ## Platform - Management Details
 
-- TODO: Replace with content
+- Replace with content
 
 ## Platform - Connectivity Details
 
-- TODO: Replace with content
+- Replace with content
 
 ## Platform - Security/Identity Details
 
-- TODO: Replace with content
+- Replace with content
 
 ## TODO List:
-  5 subs limit
-	bootstrap
+
+- 5 subs limit problem
+ 	bootstrap
 	management
 	connectivity
 	app-a
