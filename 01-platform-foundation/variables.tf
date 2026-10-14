@@ -9,7 +9,7 @@ variable "billing_scope_id" {
 }
 
 variable "location" {
-  description = "Default Azure region for platform resource groups and policy identities."
+  description = "Default Azure region used by the ALZ architecture and policy identities."
   type        = string
 }
 
@@ -20,24 +20,18 @@ variable "enable_telemetry" {
 }
 
 variable "platform_subscriptions" {
-  description = "Names, resource groups, and workload types for the three platform subscriptions."
+  description = "Names and workload types for exactly the platform management and connectivity subscriptions."
   type = map(object({
-    subscription_name   = string
-    resource_group_name = string
-    workload            = optional(string, "Production")
+    subscription_name = string
+    workload          = optional(string, "Production")
   }))
 
   validation {
     condition = length(var.platform_subscriptions) == 2 && alltrue([
       for key in ["management", "connectivity"] : contains(keys(var.platform_subscriptions), key)
     ])
-    error_message = "platform_subscriptions must contain exactly management and connectivity entries."
+    error_message = "platform_subscriptions must contain exactly management and connectivity entries; no other subscriptions are created by this stack."
   }
-}
-
-variable "resource_tags" {
-  description = "Tags applied to platform resource groups."
-  type        = map(string)
 }
 
 variable "allowed_locations" {

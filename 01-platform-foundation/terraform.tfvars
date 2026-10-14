@@ -16,12 +16,6 @@ platform_subscriptions = {
   }
 }
 
-resource_tags = {
-  Environment = "Platform"
-  ManagedBy   = "Terraform"
-  CostCenter  = "CloudPlatform"
-}
-
 allowed_locations = [
   "southcentralus",
   "eastus",
