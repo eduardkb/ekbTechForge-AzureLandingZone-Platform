@@ -1,1 +1,181 @@
-placeholder. Add code.
+provider "azurerm" {
+  features {}
+  subscription_id = var.platform_subscription_id
+}
+
+provider "azuread" {
+  tenant_id = data.azurerm_client_config.current.tenant_id
+}
+
+provider "alz" {
+  library_overwrite_enabled = true
+  library_references = [
+    {
+      path = "platform/alz"
+      ref  = "2026.04.2"
+    },
+    {
+      custom_url = "${path.root}/lib"
+    },
+  ]
+}
+
+data "azurerm_client_config" "current" {}
+
+locals {
+  management_group_ids = {
+    corporate                  = "corporate"
+    platform                   = "platform"
+    management                 = "platform-management"
+    connectivity               = "platform-connectivity"
+    security                   = "platform-security"
+    identity                   = "platform-identity"
+    ekbtechforge               = "ekbtechforge"
+    ekbtechforge_production    = "ekbtechforge-production"
+    ekbtechforge_nonproduction = "ekbtechforge-nonproduction"
+    ekbtechforge_sandbox       = "ekbtechforge-sandbox"
+    corp_b                     = "corp-b"
+    corp_b_production          = "corp-b-production"
+    corp_b_nonproduction       = "corp-b-nonproduction"
+    corp_b_sandbox             = "corp-b-sandbox"
+  }
+
+  management_group_resource_ids = {
+    for key, id in local.management_group_ids : key => "/providers/Microsoft.Management/managementGroups/${id}"
+  }
+
+  platform_subscriptions = {
+    management   = var.platform_subscriptions.management
+    connectivity = var.platform_subscriptions.connectivity
+    security     = var.platform_subscriptions.security
+  }
+}
+
+module "alz_foundation" {
+  source  = "Azure/avm-ptn-alz/azurerm"
+  version = "0.12.0"
+
+  architecture_name  = "ekbtechforge"
+  location           = var.location
+  parent_resource_id = data.azurerm_client_config.current.tenant_id
+  enable_telemetry   = var.enable_telemetry
+}
+
+resource "azurerm_subscription" "platform" {
+  for_each = local.platform_subscriptions
+
+  subscription_name = each.value.subscription_name
+  billing_scope_id  = var.billing_scope_id
+  workload          = each.value.workload
+}
+
+resource "azurerm_management_group_subscription_association" "platform" {
+  for_each = azurerm_subscription.platform
+
+  management_group_id = local.management_group_resource_ids[each.key]
+  subscription_id     = each.value.subscription_id
+
+  depends_on = [module.alz_foundation]
+}
+
+resource "azapi_resource" "platform_resource_group" {
+  for_each = local.platform_subscriptions
+
+  type      = "Microsoft.Resources/resourceGroups@2021-04-01"
+  name      = each.value.resource_group_name
+  parent_id = "/subscriptions/${azurerm_subscription.platform[each.key].subscription_id}"
+  location  = var.location
+  body = {
+    tags = var.resource_tags
+  }
+
+  depends_on = [azurerm_management_group_subscription_association.platform]
+}
+
+data "azurerm_policy_definition" "allowed_locations" {
+  display_name = "Allowed locations"
+}
+
+data "azurerm_policy_definition" "required_tag" {
+  display_name = "Require a tag on resources"
+}
+
+data "azurerm_policy_definition" "allowed_resource_types" {
+  display_name = "Allowed resource types"
+}
+
+resource "azurerm_management_group_policy_assignment" "allowed_locations" {
+  name                 = "allowed-locations"
+  display_name         = "Allowed locations"
+  management_group_id  = local.management_group_resource_ids.corporate
+  policy_definition_id = data.azurerm_policy_definition.allowed_locations.id
+  parameters = jsonencode({
+    listOfAllowedLocations = { value = var.allowed_locations }
+  })
+}
+
+resource "azurerm_management_group_policy_assignment" "required_tags" {
+  for_each = toset(var.required_tags)
+
+  name                 = "required-tag-${substr(sha1(each.value), 0, 8)}"
+  display_name         = "Require tag: ${each.value}"
+  management_group_id  = local.management_group_resource_ids.corporate
+  policy_definition_id = data.azurerm_policy_definition.required_tag.id
+  parameters = jsonencode({
+    tagName = { value = each.value }
+  })
+}
+
+resource "azurerm_management_group_policy_assignment" "allowed_resource_types" {
+  name                 = "allowed-resource-types"
+  display_name         = "Allowed resource types"
+  management_group_id  = local.management_group_resource_ids.corporate
+  policy_definition_id = data.azurerm_policy_definition.allowed_resource_types.id
+  parameters = jsonencode({
+    listOfResourceTypesAllowed = { value = var.allowed_resource_types }
+  })
+}
+
+resource "azurerm_policy_definition" "deny_public_ip" {
+  name                = "deny-public-ip-addresses"
+  display_name        = "Deny public IP addresses"
+  policy_type         = "Custom"
+  mode                = "All"
+  management_group_id = local.management_group_resource_ids.corporate
+  description         = "Blocks creation of Azure public IP address resources."
+
+  policy_rule = jsonencode({
+    if = {
+      field  = "type"
+      equals = "Microsoft.Network/publicIPAddresses"
+    }
+    then = {
+      effect = "deny"
+    }
+  })
+}
+
+resource "azurerm_management_group_policy_assignment" "deny_public_ip" {
+  name                 = "deny-public-ip-addresses"
+  display_name         = "Deny public IP addresses"
+  management_group_id  = local.management_group_resource_ids.corporate
+  policy_definition_id = azurerm_policy_definition.deny_public_ip.id
+}
+
+resource "azuread_group" "security" {
+  for_each = var.security_groups
+
+  display_name     = each.key
+  description      = each.value.description
+  security_enabled = true
+  mail_enabled     = false
+}
+
+resource "azurerm_role_assignment" "management_group" {
+  for_each = var.group_role_assignments
+
+  scope                = local.management_group_resource_ids[each.value.management_group_key]
+  role_definition_name = each.value.role_definition_name
+  principal_id         = azuread_group.security[each.value.group_name].object_id
+  principal_type       = "Group"
+}

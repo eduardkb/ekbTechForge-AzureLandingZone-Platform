@@ -1,0 +1,72 @@
+name: 01-Platform Foundation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: azure-platform-foundation
+  cancel-in-progress: false
+
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    environment: azure-platform
+    defaults:
+        run:
+            working-directory: 01-platform-foundation
+
+    env:
+      ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.PLATFORM_SUBSCRIPTION_ID }}
+      ARM_USE_OIDC: "true"      
+      TF_IN_AUTOMATION: "true"
+      TF_INPUT: "false"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ">= 1.10.0, < 2.0.0"
+
+      - name: Log in to Azure using OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.PLATFORM_SUBSCRIPTION_ID }}
+
+      - name: Initialize Terraform
+        env:
+          TFSTATE_RESOURCE_GROUP: ${{ vars.TFSTATE_RESOURCE_GROUP }}
+          TFSTATE_STORAGE_ACCOUNT: ${{ vars.TFSTATE_STORAGE_ACCOUNT }}
+          TFSTATE_CONTAINER: ${{ vars.TFSTATE_CONTAINER }}
+        run: |
+            terraform init \
+                -backend-config="resource_group_name=$TFSTATE_RESOURCE_GROUP" \
+                -backend-config="storage_account_name=$TFSTATE_STORAGE_ACCOUNT" \
+                -backend-config="container_name=$TFSTATE_CONTAINER" \
+                -backend-config="key=platform-foundation.tfstate" \
+                -backend-config="use_azuread_auth=true" \
+                -backend-config="use_oidc=true"           
+
+      - name: Check formatting
+        run: terraform fmt -check -recursive
+
+      - name: Validate Terraform
+        run: terraform validate
+
+      - name: Create Terraform plan
+        run: terraform plan -out=tfplan \
+            -var="platform_subscription_id=${{ vars.PLATFORM_SUBSCRIPTION_ID }}" \
+            -var="billing_scope_id=${{ vars.BILLING_SCOPE_ID }}"
+
+      - name: Apply Terraform plan        
+        run: terraform apply -auto-approve tfplan

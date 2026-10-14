@@ -70,7 +70,8 @@
 Configure following Variables as repository variables in the github repository (Inside Repo Settings -> Secrets and Variables -> Actions -> Variabels -> New Repository Variable):
 - AZURE_CLIENT_ID
 - AZURE_TENANT_ID
-- PLATFORM_SUBSCRIPTION_ID
+- PLATFORM_SUBSCRIPTION_ID  (the ID of the bootstrap subscription)
+- BILLING_SCOPE_ID          (inside properties blade of the billing scope)
 - TFSTATE_RESOURCE_GROUP
 - TFSTATE_STORAGE_ACCOUNT
 - TFSTATE_CONTAINER
