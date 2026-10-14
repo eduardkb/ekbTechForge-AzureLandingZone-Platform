@@ -28,10 +28,10 @@ variable "platform_subscriptions" {
   }))
 
   validation {
-    condition = length(var.platform_subscriptions) == 3 && alltrue([
-      for key in ["management", "connectivity", "security"] : contains(keys(var.platform_subscriptions), key)
+    condition = length(var.platform_subscriptions) == 2 && alltrue([
+      for key in ["management", "connectivity"] : contains(keys(var.platform_subscriptions), key)
     ])
-    error_message = "platform_subscriptions must contain exactly management, connectivity, and security entries."
+    error_message = "platform_subscriptions must contain exactly management and connectivity entries."
   }
 }
 
