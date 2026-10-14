@@ -160,16 +160,16 @@ security_groups = {
     description = "Contributor Platform management group"
   }
   "SG-Azure-EkbTechForge-Admins" = {
-    description = "Contributor Company-A management group"
+    description = "Contributor EkbTechForge management group"
   }
   "SG-Azure-EkbTechForge-Readers" = {
-    description = "Reader Company-A management group"
+    description = "Reader EkbTechForge management group"
   }
-  "SG-Azure-CorpB-Admins" = {
-    description = "Contributor Company-B management group"
+  "SG-Azure-LfzStratCraft-Admins" = {
+    description = "Contributor LfzStratCraft management group"
   }
-  "SG-Azure-CorpB-Readers" = {
-    description = "Reader Company-B management group"
+  "SG-Azure-LfzStratCraft-Readers" = {
+    description = "Reader LfzStratCraft management group"
   }
   "SG-Azure-Global-Owners" = {
     description = "Root tenant owner"
@@ -197,15 +197,15 @@ group_role_assignments = {
     role_definition_name = "Reader"
     management_group_key = "ekbtechforge"
   }
-  corpb_admins = {
-    group_name           = "SG-Azure-CorpB-Admins"
+  lfzstratcraft_admins = {
+    group_name           = "SG-Azure-LfzStratCraft-Admins"
     role_definition_name = "Contributor"
-    management_group_key = "corp_b"
+    management_group_key = "lfzstratcraft"
   }
-  corpb_readers = {
-    group_name           = "SG-Azure-CorpB-Readers"
+  lfzstratcraft_readers = {
+    group_name           = "SG-Azure-LfzStratCraft-Readers"
     role_definition_name = "Reader"
-    management_group_key = "corp_b"
+    management_group_key = "lfzstratcraft"
   }
   global_owners = {
     group_name           = "SG-Azure-Global-Owners"
