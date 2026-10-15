@@ -45,13 +45,18 @@ jobs:
 
       - name: Check management subscription exists
         id: management_subscription
+        shell: bash
         run: |
-          subscription_id="$(az account list --all --query "[?name=='platform-management-sub'].id | [0]" --output tsv)"
-          if [ -z "$subscription_id" ]; then
+            subscription_id="$(az account list --all \
+            --query "[?name=='platform-management-sub'].id | [0]" \
+            --output tsv)"
+
+            if [ -z "$subscription_id" ] || [ "$subscription_id" = "None" ]; then
             echo "::error::The platform management subscription was not found. Run the Apply-Platform-Foundation workflow first."
             exit 1
-          fi
-          echo "subscription_id=$subscription_id" >> "$GITHUB_OUTPUT"
+            fi
+
+            echo "subscription_id=$subscription_id" >> "$GITHUB_OUTPUT"
 
       - name: Initialize Terraform
         env:
@@ -75,8 +80,11 @@ jobs:
 
       - name: Create Terraform plan
         env:
-          MANAGEMENT_SUBSCRIPTION_ID: ${{ steps.management_subscription.outputs.subscription_id }}
-        run: terraform plan -out=management-apply.tfplan -var="management_subscription_id=$MANAGEMENT_SUBSCRIPTION_ID"
+            MANAGEMENT_SUBSCRIPTION_ID: ${{ steps.management_subscription.outputs.subscription_id }}
+        run: |
+            terraform plan \
+                -out=management-apply.tfplan \
+                -var="management_subscription_id=$MANAGEMENT_SUBSCRIPTION_ID"
 
       - name: Apply Terraform plan
         run: terraform apply -auto-approve management-apply.tfplan

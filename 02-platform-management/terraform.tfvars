@@ -1,6 +1,3 @@
-# USED ON LOCAL DEPLOYMENT ONLY
-management_subscription_id = "00000000-0000-0000-0000-000000000000"
-
 # GLOBAL VARIABLES
 location = "southcentralus"
 resource_group_name          = "rg-platform-management"
