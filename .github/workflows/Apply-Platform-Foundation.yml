@@ -57,23 +57,6 @@ jobs:
                 -backend-config="use_azuread_auth=true" \
                 -backend-config="use_oidc=true"
       
-      - name: Import Existing Subscriptions
-        run: |
-          terraform import \
-            -var="platform_subscription_id=${{ vars.PLATFORM_SUBSCRIPTION_ID }}" \
-            -var="invoice_section_id=${{ vars.INVOICE_SECTION_ID }}" \
-            'azurerm_subscription.platform["management"]' \
-            '/providers/Microsoft.Subscription/aliases/platform-management-sub'
-
-          terraform import \
-            -var="platform_subscription_id=${{ vars.PLATFORM_SUBSCRIPTION_ID }}" \
-            -var="invoice_section_id=${{ vars.INVOICE_SECTION_ID }}" \
-            'azurerm_subscription.platform["connectivity"]' \
-            '/providers/Microsoft.Subscription/aliases/platform-connectivity-sub'
-
-          exit 1
-    
-
       - name: Check formatting
         run: terraform fmt -check -recursive
 
@@ -86,8 +69,8 @@ jobs:
             -var="platform_subscription_id=${{ vars.PLATFORM_SUBSCRIPTION_ID }}" \
             -var="invoice_section_id=${{ vars.INVOICE_SECTION_ID }}"
 
-      - name: Apply Terraform plan        
-        run: terraform apply -auto-approve foundation-apply.tfplan
+      # - name: Apply Terraform plan        
+      #   run: terraform apply -auto-approve foundation-apply.tfplan
 
       - name: Remove local plan file
         if: always()
