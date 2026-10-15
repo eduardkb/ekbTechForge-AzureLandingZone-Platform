@@ -113,6 +113,8 @@ Configure following Variables as repository variables in the github repository (
 - Organize permissions
   - create one custom role and assign to git SP?
   
+- un-comment "workload" on subscription creation on both files
+  - run workflow. see if it really tries to re-create subscriptions and fails.
 
 - 5 subs limit problem
  	bootstrap
@@ -121,5 +123,67 @@ Configure following Variables as repository variables in the github repository (
 	app-a
 	app-b
 
+- add eduard buhali as owner to everything below root mg.
 
-add eduard buhali as owner to everything below root mg.
+- improve documentation on new consolidate RBAC custom role.
+  - check if other two assignments can be assigned through group ass well.
+  - RBAC JSON:
+  
+{
+  "id": "/providers/Microsoft.Authorization/roleDefinitions/ab303f25-8c1e-4bc3-b213-4035b40437a0",
+  "properties": {
+    "roleName": "Git-Platform-LandingZone-Contributor",
+    "description": "Manage Landing Zone networking, DNS, storage, security, monitoring, Azure Policy, management groups, and Azure RBAC role assignments.",
+    "assignableScopes": [
+      "/providers/Microsoft.Management/managementGroups/2fcb456e-2759-4cac-8b49-1f9993c0de6f"
+    ],
+    "permissions": [
+      {
+        "actions": [
+          "Microsoft.Network/virtualNetworks/*",
+          "Microsoft.Network/virtualNetworks/subnets/*",
+          "Microsoft.Network/privateEndpoints/*",
+          "Microsoft.Network/privateDnsZones/*",
+          "Microsoft.Network/dnsZones/*",
+          "Microsoft.Storage/storageAccounts/*",
+          "Microsoft.Security/*",
+          "Microsoft.OperationalInsights/workspaces/*",
+          "Microsoft.OperationalInsights/operations/read",
+          "Microsoft.Insights/*",
+          "Microsoft.AlertsManagement/*",
+          "Microsoft.Resources/deployments/*",
+          "Microsoft.Resources/subscriptions/resourceGroups/read",
+          "Microsoft.Resources/subscriptions/providers/read",
+          "Microsoft.Network/register/action",
+          "Microsoft.Storage/register/action",
+          "Microsoft.Security/register/action",
+          "Microsoft.OperationalInsights/register/action",
+          "Microsoft.Insights/register/action",
+
+          "Microsoft.Management/managementGroups/delete",
+          "Microsoft.Management/managementGroups/read",
+          "Microsoft.Management/managementGroups/write",
+          "Microsoft.Management/managementGroups/subscriptions/delete",
+          "Microsoft.Management/managementGroups/subscriptions/read",
+          "Microsoft.Management/managementGroups/subscriptions/write",
+
+          "Microsoft.Authorization/policyassignments/*",
+          "Microsoft.Authorization/policydefinitions/*",
+          "Microsoft.Authorization/policyexemptions/*",
+          "Microsoft.Authorization/policyenrollments/*",
+          "Microsoft.Authorization/policysetdefinitions/*",
+          "Microsoft.PolicyInsights/*",
+          "Microsoft.Support/*",
+          "*/read",
+
+          "Microsoft.Authorization/roleAssignments/*",
+          "Microsoft.Authorization/roleDefinitions/read",
+          "Microsoft.Authorization/denyAssignments/read"
+        ],
+        "notActions": [],
+        "dataActions": [],
+        "notDataActions": []
+      }
+    ]
+  }
+}

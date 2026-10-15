@@ -69,8 +69,8 @@ jobs:
             -var="platform_subscription_id=${{ vars.PLATFORM_SUBSCRIPTION_ID }}" \
             -var="invoice_section_id=${{ vars.INVOICE_SECTION_ID }}"
 
-      # - name: Apply Terraform plan        
-      #   run: terraform apply -auto-approve foundation-apply.tfplan
+      - name: Apply Terraform plan        
+        run: terraform apply -auto-approve foundation-apply.tfplan
 
       - name: Remove local plan file
         if: always()
