@@ -110,6 +110,10 @@ Configure following Variables as repository variables in the github repository (
 
 ## TODO List:
 
+- Organize permissions
+  - create one custom role and assign to git SP?
+  
+
 - 5 subs limit problem
  	bootstrap
 	management

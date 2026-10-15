@@ -1,5 +1,9 @@
 provider "azurerm" {
-  features {}
+  features {
+    subscription {
+      prevent_cancellation_on_destroy = true
+    }
+  }
   resource_provider_registrations = "none"
   subscription_id                 = var.platform_subscription_id
 }

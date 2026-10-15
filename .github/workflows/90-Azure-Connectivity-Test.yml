@@ -2,7 +2,7 @@
 # TEST AZURE CONNECTIVITY WITH OIDC
 #######################################
 
-name: 50-Azure Connectivity Test
+name: 90-Azure Connectivity Test
 
 on:
   workflow_dispatch:
