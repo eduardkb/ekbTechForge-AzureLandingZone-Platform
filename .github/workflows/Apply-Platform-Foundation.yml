@@ -60,10 +60,14 @@ jobs:
       - name: Import Existing Subscriptions
         run: |
           terraform import \
+            -var="platform_subscription_id=${{ vars.PLATFORM_SUBSCRIPTION_ID }}" \
+            -var="invoice_section_id=${{ vars.INVOICE_SECTION_ID }}" \
             'azurerm_subscription.platform["management"]' \
             '/providers/Microsoft.Subscription/aliases/platform-management-sub'
 
           terraform import \
+            -var="platform_subscription_id=${{ vars.PLATFORM_SUBSCRIPTION_ID }}" \
+            -var="invoice_section_id=${{ vars.INVOICE_SECTION_ID }}" \
             'azurerm_subscription.platform["connectivity"]' \
             '/providers/Microsoft.Subscription/aliases/platform-connectivity-sub'
 
