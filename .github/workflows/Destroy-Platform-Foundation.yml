@@ -1,4 +1,4 @@
-name: 50-Destroy-Platform-Foundation
+name: Destroy-Platform-Foundation
 
 on:
   workflow_dispatch:

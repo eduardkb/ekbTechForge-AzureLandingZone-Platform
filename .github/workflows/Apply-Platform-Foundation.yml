@@ -1,4 +1,4 @@
-name: 01-Platform Foundation
+name: Apply-Platform Foundation
 
 on:
   workflow_dispatch:

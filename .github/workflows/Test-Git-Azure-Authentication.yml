@@ -2,7 +2,7 @@
 # TEST AZURE CONNECTIVITY WITH OIDC
 #######################################
 
-name: 90-Azure Connectivity Test
+name: Test-Git-Azure-Authentication
 
 on:
   workflow_dispatch:
