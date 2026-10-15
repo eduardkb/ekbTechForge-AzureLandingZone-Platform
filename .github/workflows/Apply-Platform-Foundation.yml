@@ -56,17 +56,14 @@ jobs:
                 -backend-config="key=platform-foundation.tfstate" \
                 -backend-config="use_azuread_auth=true" \
                 -backend-config="use_oidc=true"
+      - name: List Azure Subscription Aliases
+        run: |
+          az account alias list --output table
 
       - name: DEB-List Terraform State
         run: terraform state list
-
-      - name: DEB-Inspect Connectivity Subscription State
-        run: terraform state show 'azurerm_subscription.platform["connectivity"]' || true
-
-      - name: DEB-Inspect Management Subscription State
-        run: |
-          terraform state show 'azurerm_subscription.platform["management"]' || true
           exit 1
+      
 
       - name: Check formatting
         run: terraform fmt -check -recursive
