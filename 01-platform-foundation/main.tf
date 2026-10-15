@@ -70,7 +70,7 @@ resource "azurerm_subscription" "platform" {
 
   subscription_name = each.value.subscription_name
   billing_scope_id  = var.invoice_section_id
-  workload          = each.value.workload
+  # workload          = each.value.workload
 }
 
 resource "azurerm_management_group_subscription_association" "platform" {

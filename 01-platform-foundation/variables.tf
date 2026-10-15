@@ -23,7 +23,7 @@ variable "platform_subscriptions" {
   description = "Names and workload types for exactly the platform management and connectivity subscriptions."
   type = map(object({
     subscription_name = string
-    workload          = optional(string, "Production")
+    # workload          = optional(string, "Production")
   }))
 
   validation {
