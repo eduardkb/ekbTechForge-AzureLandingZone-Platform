@@ -66,7 +66,8 @@ jobs:
       - name: Create destroy plan
         run: |
           terraform plan -destroy -out=foundation-destroy.tfplan \
-            -var="platform_subscription_id=${{ vars.PLATFORM_SUBSCRIPTION_ID }}"
+            -var="platform_subscription_id=${{ vars.PLATFORM_SUBSCRIPTION_ID }}" \
+            -var="invoice_section_id=${{ vars.INVOICE_SECTION_ID }}"
 
       - name: Apply destroy plan
         run: terraform apply -auto-approve foundation-destroy.tfplan
