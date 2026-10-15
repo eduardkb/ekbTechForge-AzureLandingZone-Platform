@@ -3,9 +3,7 @@ provider "azurerm" {
     subscription {
       prevent_cancellation_on_destroy = false
     }
-  }
-
-  resource_provider_registrations = "none"
+  }  
   subscription_id                 = var.management_subscription_id
 }
 

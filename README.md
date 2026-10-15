@@ -151,14 +151,14 @@ Configure following Variables as repository variables in the github repository (
           "Microsoft.OperationalInsights/operations/read",
           "Microsoft.Insights/*",
           "Microsoft.AlertsManagement/*",
-          "Microsoft.Resources/deployments/*",
-          "Microsoft.Resources/subscriptions/resourceGroups/read",
+          "Microsoft.Resources/deployments/*",          
+          "Microsoft.Resources/subscriptions/resourceGroups/*",
           "Microsoft.Resources/subscriptions/providers/read",
           "Microsoft.Network/register/action",
           "Microsoft.Storage/register/action",
           "Microsoft.Security/register/action",
           "Microsoft.OperationalInsights/register/action",
-          "Microsoft.Insights/register/action",
+          "Microsoft.Insights/register/action",         
 
           "Microsoft.Management/managementGroups/delete",
           "Microsoft.Management/managementGroups/read",
@@ -178,7 +178,8 @@ Configure following Variables as repository variables in the github repository (
 
           "Microsoft.Authorization/roleAssignments/*",
           "Microsoft.Authorization/roleDefinitions/read",
-          "Microsoft.Authorization/denyAssignments/read"
+          "Microsoft.Authorization/denyAssignments/read",
+          "Microsoft.Authorization/locks/write"
         ],
         "notActions": [],
         "dataActions": [],
