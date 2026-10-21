@@ -4,7 +4,7 @@ provider "azurerm" {
       prevent_cancellation_on_destroy = false
     }
   }
-  subscription_id                 = var.connectivity_subscription_id
+  subscription_id = var.connectivity_subscription_id
 }
 
 provider "azapi" {
