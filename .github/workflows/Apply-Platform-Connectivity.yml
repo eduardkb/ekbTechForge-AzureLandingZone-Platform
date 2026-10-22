@@ -74,7 +74,13 @@ jobs:
 
       # - name: Check formatting
       #   run: terraform fmt -check -recursive
-
+      
+      - name: TEMP- Remove deleted DNS links from Terraform state
+        shell: bash
+        run: |
+          terraform state rm 'module.private_dns_zone_hub_links["privatelink.blob.core.windows.net"].azapi_resource.private_dns_zone_network_link'
+          terraform state rm 'module.private_dns_zone_hub_links["privatelink.file.core.windows.net"].azapi_resource.private_dns_zone_network_link'
+      
       - name: Validate Terraform
         run: terraform validate
 
