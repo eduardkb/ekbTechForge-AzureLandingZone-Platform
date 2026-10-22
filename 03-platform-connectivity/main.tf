@@ -120,11 +120,11 @@ module "private_dns_zone_hub_links" {
 
   for_each = var.private_dns_zones
 
-  name                   = "vnet-hub-link"
-  parent_id              = module.private_dns_zones[each.key].resource_id
-  virtual_network_id     = module.hub_virtual_network.resource_id
-  registration_enabled   = false
-  tags                   = var.tags
+  name                 = "vnet-hub-link"
+  parent_id            = module.private_dns_zones[each.key].resource_id
+  virtual_network_id   = module.hub_virtual_network.resource_id
+  registration_enabled = false
+  tags                 = var.tags
 
   # Disables the deprecated retry attributes for the VNet-link resource.
   retry = null
