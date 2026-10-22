@@ -11,9 +11,17 @@ provider "azapi" {
   subscription_id = var.connectivity_subscription_id
 }
 
-data "azurerm_network_watcher" "connectivity" {
+resource "azurerm_resource_group" "network_watcher" {
+  name     = var.network_watcher_resource_group_name
+  location = var.location
+  tags     = var.tags
+}
+
+resource "azurerm_network_watcher" "connectivity" {
   name                = var.network_watcher_name
-  resource_group_name = var.network_watcher_resource_group_name
+  resource_group_name = azurerm_resource_group.network_watcher.name
+  location            = azurerm_resource_group.network_watcher.location
+  tags                = var.tags
 }
 
 locals {
@@ -80,7 +88,7 @@ module "flow_log_storage" {
 resource "azapi_resource" "hub_vnet_flow_log" {
   type      = "Microsoft.Network/networkWatchers/flowLogs@2025-07-01"
   name      = var.flow_log_name
-  parent_id = data.azurerm_network_watcher.connectivity.id
+  parent_id = azurerm_network_watcher.connectivity.id
   location  = var.location
   tags      = var.tags
 
@@ -115,6 +123,8 @@ module "private_dns_zones" {
   parent_id        = module.connectivity_resource_group.resource_id
   enable_telemetry = var.enable_telemetry
   tags             = var.tags
+  retry            = null
+
   virtual_network_links = {
     hub = {
       name                 = "vnet-hub-link"
