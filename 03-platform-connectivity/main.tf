@@ -114,6 +114,19 @@ resource "azapi_resource" "hub_vnet_flow_log" {
   }
 }
 
+module "private_dns_zones" {
+  source   = "Azure/avm-res-network-privatednszone/azurerm"
+  version  = "0.5.0"
+  for_each = var.private_dns_zones
+
+  domain_name      = each.value
+  parent_id        = module.connectivity_resource_group.resource_id
+  enable_telemetry = var.enable_telemetry
+  tags             = var.tags
+
+  retry = null
+}
+
 module "private_dns_zone_hub_links" {
   source  = "Azure/avm-res-network-privatednszone/azurerm//modules/private_dns_virtual_network_link"
   version = "0.5.0"
