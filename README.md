@@ -38,9 +38,10 @@
 {
   "properties": {
     "roleName": "Git-Platform-LandingZone-Contributor",
-    "description": "Create, read, modify, and delete Landing Zone networking, DNS, storage, Defender for Cloud, Log Analytics, Azure Monitor, diagnostic settings, alerts, and action groups.",
-    "assignableScopes": 
-      ["/providers/Microsoft.Management/managementGroups/<ROOT_MANAGEMENT_GROUP_ID>"],    
+    "description": "Manage Landing Zone networking, DNS, storage, security, monitoring, Azure Policy, management groups, and Azure RBAC role assignments.",
+    "assignableScopes": [
+      "/providers/Microsoft.Management/managementGroups/<ROOT_MG_ID>"
+    ],
     "permissions": [
       {
         "actions": [
@@ -49,21 +50,42 @@
           "Microsoft.Network/privateEndpoints/*",
           "Microsoft.Network/privateDnsZones/*",
           "Microsoft.Network/dnsZones/*",
+          "Microsoft.Network/networkWatchers/*",
           "Microsoft.Storage/storageAccounts/*",
           "Microsoft.Security/*",
           "Microsoft.OperationalInsights/workspaces/*",
           "Microsoft.OperationalInsights/operations/read",
           "Microsoft.Insights/*",
           "Microsoft.AlertsManagement/*",
-          "Microsoft.Resources/deployments/*",
-          "Microsoft.Resources/subscriptions/resourceGroups/read",
+          "Microsoft.Resources/deployments/*",          
+          "Microsoft.Resources/subscriptions/resourceGroups/*",
           "Microsoft.Resources/subscriptions/providers/read",
-          "Microsoft.Authorization/*/read",
           "Microsoft.Network/register/action",
           "Microsoft.Storage/register/action",
           "Microsoft.Security/register/action",
           "Microsoft.OperationalInsights/register/action",
-          "Microsoft.Insights/register/action"
+          "Microsoft.Insights/register/action",         
+
+          "Microsoft.Management/managementGroups/delete",
+          "Microsoft.Management/managementGroups/read",
+          "Microsoft.Management/managementGroups/write",
+          "Microsoft.Management/managementGroups/subscriptions/delete",
+          "Microsoft.Management/managementGroups/subscriptions/read",
+          "Microsoft.Management/managementGroups/subscriptions/write",
+
+          "Microsoft.Authorization/policyassignments/*",
+          "Microsoft.Authorization/policydefinitions/*",
+          "Microsoft.Authorization/policyexemptions/*",
+          "Microsoft.Authorization/policyenrollments/*",
+          "Microsoft.Authorization/policysetdefinitions/*",
+          "Microsoft.PolicyInsights/*",
+          "Microsoft.Support/*",
+          "*/read",
+
+          "Microsoft.Authorization/locks/*",
+          "Microsoft.Authorization/roleAssignments/*",
+          "Microsoft.Authorization/roleDefinitions/read",
+          "Microsoft.Authorization/denyAssignments/read"
         ],
         "notActions": [],
         "dataActions": [],
@@ -127,64 +149,3 @@ Configure following Variables as repository variables in the github repository (
 
 - improve documentation on new consolidate RBAC custom role.
   - check if other two assignments can be assigned through group ass well.
-  - RBAC JSON:
-  
-{
-  "id": "/providers/Microsoft.Authorization/roleDefinitions/ab303f25-8c1e-4bc3-b213-4035b40437a0",
-  "properties": {
-    "roleName": "Git-Platform-LandingZone-Contributor",
-    "description": "Manage Landing Zone networking, DNS, storage, security, monitoring, Azure Policy, management groups, and Azure RBAC role assignments.",
-    "assignableScopes": [
-      "/providers/Microsoft.Management/managementGroups/2fcb456e-2759-4cac-8b49-1f9993c0de6f"
-    ],
-    "permissions": [
-      {
-        "actions": [
-          "Microsoft.Network/virtualNetworks/*",
-          "Microsoft.Network/virtualNetworks/subnets/*",
-          "Microsoft.Network/privateEndpoints/*",
-          "Microsoft.Network/privateDnsZones/*",
-          "Microsoft.Network/dnsZones/*",
-          "Microsoft.Storage/storageAccounts/*",
-          "Microsoft.Security/*",
-          "Microsoft.OperationalInsights/workspaces/*",
-          "Microsoft.OperationalInsights/operations/read",
-          "Microsoft.Insights/*",
-          "Microsoft.AlertsManagement/*",
-          "Microsoft.Resources/deployments/*",          
-          "Microsoft.Resources/subscriptions/resourceGroups/*",
-          "Microsoft.Resources/subscriptions/providers/read",
-          "Microsoft.Network/register/action",
-          "Microsoft.Storage/register/action",
-          "Microsoft.Security/register/action",
-          "Microsoft.OperationalInsights/register/action",
-          "Microsoft.Insights/register/action",         
-
-          "Microsoft.Management/managementGroups/delete",
-          "Microsoft.Management/managementGroups/read",
-          "Microsoft.Management/managementGroups/write",
-          "Microsoft.Management/managementGroups/subscriptions/delete",
-          "Microsoft.Management/managementGroups/subscriptions/read",
-          "Microsoft.Management/managementGroups/subscriptions/write",
-
-          "Microsoft.Authorization/policyassignments/*",
-          "Microsoft.Authorization/policydefinitions/*",
-          "Microsoft.Authorization/policyexemptions/*",
-          "Microsoft.Authorization/policyenrollments/*",
-          "Microsoft.Authorization/policysetdefinitions/*",
-          "Microsoft.PolicyInsights/*",
-          "Microsoft.Support/*",
-          "*/read",
-
-          "Microsoft.Authorization/roleAssignments/*",
-          "Microsoft.Authorization/roleDefinitions/read",
-          "Microsoft.Authorization/denyAssignments/read",
-          "Microsoft.Authorization/locks/write"
-        ],
-        "notActions": [],
-        "dataActions": [],
-        "notDataActions": []
-      }
-    ]
-  }
-}
