@@ -38,6 +38,8 @@ allowed_resource_types = [
   "Microsoft.Network/virtualNetworks/subnets",
   "Microsoft.Network/networkInterfaces",
   "Microsoft.Network/networkSecurityGroups",
+  "Microsoft.Network/networkWatchers",
+  "Microsoft.Network/networkWatchers/flowLogs",
   "Microsoft.Network/publicIPAddresses",
   "Microsoft.Network/routeTables",
   "Microsoft.Network/privateDnsZones",

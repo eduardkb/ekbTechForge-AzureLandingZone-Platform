@@ -152,4 +152,4 @@ module "public_dns_zone" {
   resource_group_name = module.connectivity_resource_group.name
   enable_telemetry    = var.enable_telemetry
   tags                = var.tags
-} # placeholder. Add code.
+}
