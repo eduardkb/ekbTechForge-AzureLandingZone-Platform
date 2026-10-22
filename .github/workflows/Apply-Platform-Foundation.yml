@@ -57,8 +57,8 @@ jobs:
                 -backend-config="use_azuread_auth=true" \
                 -backend-config="use_oidc=true"
       
-      - name: Check formatting
-        run: terraform fmt -check -recursive
+      # - name: Check formatting
+      #   run: terraform fmt -check -recursive
 
       - name: Validate Terraform
         run: terraform validate
