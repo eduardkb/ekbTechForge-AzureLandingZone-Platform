@@ -139,8 +139,11 @@ module "private_dns_zone_hub_links" {
   registration_enabled = false
   tags                 = var.tags
 
-  # Disables the deprecated retry attributes for the VNet-link resource.
-  retry = null
+  retry = {
+    error_message_regex  = ["ResourceNotFound"]
+    interval_seconds     = 10
+    max_interval_seconds = 180
+  }
 }
 
 module "public_dns_zone" {
