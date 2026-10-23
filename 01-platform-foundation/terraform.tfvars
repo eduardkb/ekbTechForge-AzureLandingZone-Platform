@@ -66,6 +66,7 @@ allowed_resource_types = [
   # Virtual machines and compute
   "Microsoft.Compute/virtualMachines",
   "Microsoft.Compute/virtualMachines/extensions",
+  "Microsoft.DevTestLab/schedules",
   "Microsoft.Compute/disks",
   "Microsoft.Compute/snapshots",
   "Microsoft.Compute/availabilitySets",
