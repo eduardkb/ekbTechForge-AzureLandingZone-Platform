@@ -25,12 +25,12 @@ output "hub_vnet_flow_log_id" {
   value       = azapi_resource.hub_vnet_flow_log.id
 }
 
-output "private_dns_zone_ids" {
-  description = "Resource IDs of the private DNS zones linked to the hub."
-  value       = { for key, zone in module.private_dns_zones : key => zone.resource_id }
-}
+# output "private_dns_zone_ids" {
+#   description = "Resource IDs of the private DNS zones linked to the hub."
+#   value       = { for key, zone in module.private_dns_zones : key => zone.resource_id }
+# }
 
-output "public_dns_zone_id" {
-  description = "Resource ID of the optional public DNS zone, or null when not configured."
-  value       = try(module.public_dns_zone[0].resource_id, null)
-}
+# output "public_dns_zone_id" {
+#   description = "Resource ID of the optional public DNS zone, or null when not configured."
+#   value       = try(module.public_dns_zone[0].resource_id, null)
+# }
