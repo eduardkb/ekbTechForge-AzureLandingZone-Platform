@@ -114,45 +114,45 @@ resource "azapi_resource" "hub_vnet_flow_log" {
   }
 }
 
-module "private_dns_zones" {
-  source   = "Azure/avm-res-network-privatednszone/azurerm"
-  version  = "0.5.0"
-  for_each = var.private_dns_zones
+# module "private_dns_zones" {
+#   source   = "Azure/avm-res-network-privatednszone/azurerm"
+#   version  = "0.5.0"
+#   for_each = var.private_dns_zones
 
-  domain_name      = each.value
-  parent_id        = module.connectivity_resource_group.resource_id
-  enable_telemetry = var.enable_telemetry
-  tags             = var.tags
+#   domain_name      = each.value
+#   parent_id        = module.connectivity_resource_group.resource_id
+#   enable_telemetry = var.enable_telemetry
+#   tags             = var.tags
 
-  retry = null
-}
+#   retry = null
+# }
 
-module "private_dns_zone_hub_links" {
-  source  = "Azure/avm-res-network-privatednszone/azurerm//modules/private_dns_virtual_network_link"
-  version = "0.5.0"
+# module "private_dns_zone_hub_links" {
+#   source  = "Azure/avm-res-network-privatednszone/azurerm//modules/private_dns_virtual_network_link"
+#   version = "0.5.0"
 
-  for_each = var.private_dns_zones
+#   for_each = var.private_dns_zones
 
-  name                 = "vnet-hub-link"
-  parent_id            = module.private_dns_zones[each.key].resource_id
-  virtual_network_id   = module.hub_virtual_network.resource_id
-  registration_enabled = false
-  tags                 = var.tags
+#   name                 = "vnet-hub-link"
+#   parent_id            = module.private_dns_zones[each.key].resource_id
+#   virtual_network_id   = module.hub_virtual_network.resource_id
+#   registration_enabled = false
+#   tags                 = var.tags
 
-  retry = {
-    error_message_regex  = ["ResourceNotFound"]
-    interval_seconds     = 10
-    max_interval_seconds = 180
-  }
-}
+#   retry = {
+#     error_message_regex  = ["ResourceNotFound"]
+#     interval_seconds     = 10
+#     max_interval_seconds = 180
+#   }
+# }
 
-module "public_dns_zone" {
-  count   = var.public_dns_zone_name == null ? 0 : 1
-  source  = "Azure/avm-res-network-dnszone/azurerm"
-  version = "0.2.1"
+# module "public_dns_zone" {
+#   count   = var.public_dns_zone_name == null ? 0 : 1
+#   source  = "Azure/avm-res-network-dnszone/azurerm"
+#   version = "0.2.1"
 
-  name                = var.public_dns_zone_name
-  resource_group_name = module.connectivity_resource_group.name
-  enable_telemetry    = var.enable_telemetry
-  tags                = var.tags
-}
+#   name                = var.public_dns_zone_name
+#   resource_group_name = module.connectivity_resource_group.name
+#   enable_telemetry    = var.enable_telemetry
+#   tags                = var.tags
+# }
