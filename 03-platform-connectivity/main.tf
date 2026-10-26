@@ -36,9 +36,9 @@ module "connectivity_resource_group" {
   location         = var.location
   tags             = var.tags
   enable_telemetry = var.enable_telemetry
-  lock = {
-    kind = "CanNotDelete"
-  }
+  # lock = {
+  #   kind = "CanNotDelete"
+  # }
 }
 
 module "hub_virtual_network" {
