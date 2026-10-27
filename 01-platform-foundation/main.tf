@@ -126,41 +126,12 @@ resource "azurerm_management_group_policy_assignment" "allowed_resource_types" {
   })
 }
 
-resource "azurerm_policy_definition" "deny_public_ip" {
-  name                = "deny-public-ip-on-nics"
-  display_name        = "Deny public IP addresses on network interfaces"
-  policy_type         = "Custom"
-  mode                = "All"
-  management_group_id = local.management_group_resource_ids.corporate
-
-  description = "Prevents public IP addresses from being associated with network interfaces."
-
-  policy_rule = jsonencode({
-    if = {
-      allOf = [
-        {
-          field  = "type"
-          equals = "Microsoft.Network/networkInterfaces"
-        },
-        {
-          count = {
-            field = "Microsoft.Network/networkInterfaces/ipConfigurations[*].publicIPAddress.id"
-          }
-          greater = 0
-        }
-      ]
-    }
-    then = {
-      effect = "deny"
-    }
-  })
-}
-
 resource "azurerm_management_group_policy_assignment" "deny_public_ip" {
   name                 = "deny-public-ip-on-nics"
-  display_name         = "Deny public IP addresses on network interfaces"
+  display_name         = "Deny public IPs on NICs"
   management_group_id  = local.management_group_resource_ids.corporate
-  policy_definition_id = azurerm_policy_definition.deny_public_ip.id
+
+  policy_definition_id = "/providers/Microsoft.Authorization/policyDefinitions/83a86a26-fd1f-447c-b59d-e51f44264114"
 }
 
 resource "azuread_group" "security" {
