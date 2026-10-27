@@ -45,28 +45,19 @@
     "permissions": [
       {
         "actions": [
+          "Microsoft.Resources/deployments/*",
+          "Microsoft.Resources/subscriptions/resourceGroups/*",
+          "Microsoft.Resources/subscriptions/providers/read",
+
           "Microsoft.Network/virtualNetworks/*",
-          "Microsoft.Network/virtualNetworks/subnets/*",
           "Microsoft.Network/privateEndpoints/*",
           "Microsoft.Network/privateDnsZones/*",
           "Microsoft.Network/dnsZones/*",
           "Microsoft.Network/networkWatchers/*",
           "Microsoft.Network/loadBalancers/*",
           "Microsoft.Network/publicIPAddresses/*",
-          "Microsoft.Storage/storageAccounts/*",
-          "Microsoft.Security/*",
-          "Microsoft.OperationalInsights/workspaces/*",
-          "Microsoft.OperationalInsights/operations/read",
-          "Microsoft.Insights/*",
-          "Microsoft.AlertsManagement/*",
-          "Microsoft.Resources/deployments/*",          
-          "Microsoft.Resources/subscriptions/resourceGroups/*",
-          "Microsoft.Resources/subscriptions/providers/read",
+          "Microsoft.Network/networkInterfaces/*",
           "Microsoft.Network/register/action",
-          "Microsoft.Storage/register/action",
-          "Microsoft.Security/register/action",
-          "Microsoft.OperationalInsights/register/action",
-          "Microsoft.Insights/register/action",         
 
           "Microsoft.Management/managementGroups/delete",
           "Microsoft.Management/managementGroups/read",
@@ -75,19 +66,34 @@
           "Microsoft.Management/managementGroups/subscriptions/read",
           "Microsoft.Management/managementGroups/subscriptions/write",
 
+          "Microsoft.Storage/storageAccounts/*",
+          "Microsoft.Storage/register/action",
+
+          "Microsoft.Security/*",
+          "Microsoft.Security/register/action",
+
+          "Microsoft.OperationalInsights/workspaces/*",
+          "Microsoft.OperationalInsights/operations/read",
+          "Microsoft.OperationalInsights/register/action",
+
+          "Microsoft.Insights/*",
+          "Microsoft.Insights/register/action",
+          "Microsoft.AlertsManagement/*",
+
           "Microsoft.Authorization/policyassignments/*",
           "Microsoft.Authorization/policydefinitions/*",
           "Microsoft.Authorization/policyexemptions/*",
           "Microsoft.Authorization/policyenrollments/*",
           "Microsoft.Authorization/policysetdefinitions/*",
-          "Microsoft.PolicyInsights/*",
-          "Microsoft.Support/*",
-          "*/read",
-
           "Microsoft.Authorization/locks/*",
           "Microsoft.Authorization/roleAssignments/*",
           "Microsoft.Authorization/roleDefinitions/read",
-          "Microsoft.Authorization/denyAssignments/read"
+          "Microsoft.Authorization/denyAssignments/read",
+
+          "Microsoft.PolicyInsights/*",
+          "Microsoft.Support/*",
+
+          "*/read"
         ],
         "notActions": [],
         "dataActions": [],
