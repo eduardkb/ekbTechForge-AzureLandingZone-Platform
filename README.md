@@ -51,6 +51,8 @@
           "Microsoft.Network/privateDnsZones/*",
           "Microsoft.Network/dnsZones/*",
           "Microsoft.Network/networkWatchers/*",
+          "Microsoft.Network/loadBalancers/*",
+          "Microsoft.Network/publicIPAddresses/*",
           "Microsoft.Storage/storageAccounts/*",
           "Microsoft.Security/*",
           "Microsoft.OperationalInsights/workspaces/*",
